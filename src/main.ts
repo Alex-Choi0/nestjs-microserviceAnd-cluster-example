@@ -6,16 +6,17 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  console.log("REDIS PORT : ", +process.env.REDIS_PORT);
-  console.log("REDIS HOST : ", process.env.REDIS_HOST);
-  // Redis MicroService 연결(Pub/Sub기능 구현)
+  console.log('REDIS PORT : ', +process.env.REDIS_PORT);
+  console.log('REDIS HOST : ', process.env.REDIS_HOST);
+  // Redis MicroService 연결(PubSub/Sub기능 구현)
   app.connectMicroservice<MicroserviceOptions>({
-    transport : Transport.REDIS,
-    options : {
-      port : +process.env.REDIS_PORT,
-      host : process.env.REDIS_HOST
-    }
-  })
+    transport: Transport.REDIS,
+    options: {
+      port: +process.env.REDIS_PORT,
+      host: process.env.REDIS_HOST,
+      password: process.env.REDIS_PASSWORD || null,
+    },
+  });
 
   app.enableCors();
 
@@ -39,7 +40,7 @@ async function bootstrap() {
   // Swagger Document의 문서를 api(/api-docs)로 설정할수 있게 셋팅
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-docs', app, document);
-  await app.startAllMicroservices()
+  await app.startAllMicroservices();
   await app.listen(+process.env.NESTJS_PORT);
   console.log('NestJS Port : ', process.env.NESTJS_PORT);
 }
