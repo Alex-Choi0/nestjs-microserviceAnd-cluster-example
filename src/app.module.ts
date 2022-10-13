@@ -1,8 +1,6 @@
 import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { SocketioModule } from './socketio/socketio.module';
 
 @Module({
@@ -18,7 +16,7 @@ import { SocketioModule } from './socketio/socketio.module';
     }),
     SocketioModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

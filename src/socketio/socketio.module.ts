@@ -16,6 +16,7 @@ import { SocketioController } from './socket_publish/socketio.controller';
         REDIS_HOST: Joi.string().required(),
       }),
     }),
+    // Redis에 Publish하기 위한 셋팅
     ClientsModule.register([
       {
         name: 'CHATTING_SERVICE',

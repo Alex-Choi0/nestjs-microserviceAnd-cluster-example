@@ -10,7 +10,8 @@ export class SocketioController {
   @EventPattern('test')
   async chattingSubScrib(data: Record<string, unknown>) {
     console.log('chattingSubScrib : ', data);
-    // Redis에서 Sub한 데이터를 socketIO로 BroadCast한다.
+    // Redis의 test패턴에서 Sub한 데이터를 socketIO로 BroadCast한다.
+    // 위 코드에서는 chatroom으로 고정한다.
     this.socketioGateway.sendBroadCast('chatroom', data);
     console.log('BroadCast Message from chattingSubScrib');
   }

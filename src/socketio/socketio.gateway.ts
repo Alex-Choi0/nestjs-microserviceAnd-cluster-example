@@ -41,6 +41,7 @@ export class SocketioGateway {
       ' broadCastMessage : ',
       broadCastMessage,
     );
+    // 해당방(room)에 데이터(broadCastMessage)를 전달한다
     return this.server.emit(room, broadCastMessage);
   }
 }
