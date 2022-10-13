@@ -1,15 +1,46 @@
-import { WebSocketGateway, SubscribeMessage, MessageBody } from '@nestjs/websockets';
-import { SocketioService } from './socketio.service';
+import {
+  ConnectedSocket,
+  MessageBody,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from '@nestjs/websockets';
+import { Server, ServerOptions, Socket } from 'socket.io';
 import { CreateSocketioDto } from './dto/create-socketio.dto';
-import { UpdateSocketioDto } from './dto/update-socketio.dto';
-import { EventPattern } from '@nestjs/microservices';
+import { SocketioService } from './socketio.service';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
 export class SocketioGateway {
+  @WebSocketServer()
+  server: Server;
+  serverOptions: ServerOptions;
+
   constructor(private readonly socketioService: SocketioService) {}
 
-  @SubscribeMessage('createSocketio')
-  create(@MessageBody() createSocketioDto: CreateSocketioDto) {
-    return this.socketioService.create(createSocketioDto);
+  // socketIO에서 chatroom방에 데이터를 보낸다.
+  @SubscribeMessage('chatroom')
+  create(
+    @MessageBody() data: CreateSocketioDto,
+    @ConnectedSocket() client: Socket,
+  ) {
+    // redis서버에 test라는 패턴으로 data를 publish한다.
+    this.socketioService.PubSublishEvent('test', data);
+  }
+
+  // 해당방에 메세지를 전달한다.
+  async sendBroadCast(room: string, broadCastMessage: any) {
+    console.log(
+      'DateTime : ',
+      new Date(),
+      ' sendBroadCast : ',
+      room,
+      ' broadCastMessage : ',
+      broadCastMessage,
+    );
+    return this.server.emit(room, broadCastMessage);
   }
 }

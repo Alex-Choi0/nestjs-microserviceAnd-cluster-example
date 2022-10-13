@@ -1,1 +1,4 @@
-export class CreateSocketioDto {}
+export class CreateSocketioDto {
+  user: string;
+  message: string;
+}

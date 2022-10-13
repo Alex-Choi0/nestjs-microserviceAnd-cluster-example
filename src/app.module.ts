@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PubSubModule } from './pubsub/pubsub.module';
 import { SocketioModule } from './socketio/socketio.module';
 
 @Module({
@@ -18,7 +17,6 @@ import { SocketioModule } from './socketio/socketio.module';
       }),
     }),
     SocketioModule,
-    PubSubModule,
   ],
   controllers: [AppController],
   providers: [AppService],
