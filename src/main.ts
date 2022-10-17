@@ -39,7 +39,7 @@ async function bootstrap() {
   // Swagger Document의 문서를 api(/api-docs)로 설정할수 있게 셋팅
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-docs', app, document);
-  await app.startAllMicroservices();
+  await app.startAllMicroservices(); // 마이크로서비스 활성화
   await app.listen(+process.env.NESTJS_PORT);
   console.log('REDIS PORT : ', process.env.REDIS_PORT);
   console.log('REDIS HOST : ', process.env.REDIS_HOST);

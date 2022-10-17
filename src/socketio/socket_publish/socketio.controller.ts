@@ -7,7 +7,7 @@ export class SocketioController {
   constructor(private readonly socketioGateway: SocketioGateway) {}
 
   // Redis에서 test패턴을 Subscribe하고 해당 메세지가 들어오면 socketIO에 BroadCast한다.
-  @EventPattern('test')
+  @EventPattern('gameStatus')
   async chattingSubScrib(data: Record<string, unknown>) {
     console.log('chattingSubScrib : ', data);
     // Redis의 test패턴에서 Sub한 데이터를 socketIO로 BroadCast한다.
