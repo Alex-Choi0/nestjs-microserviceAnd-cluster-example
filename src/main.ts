@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppClusterService } from './app-cluster.service';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -31,7 +32,7 @@ async function bootstrap() {
   );
 
   const options = new DocumentBuilder()
-    .setTitle('NestJS-MicroService-UseRedisPub/Sub-Example')
+    .setTitle('NestJS-MicroService-UseRedisPub/Sub-Example AND Cluster')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
@@ -45,4 +46,5 @@ async function bootstrap() {
   console.log('REDIS HOST : ', process.env.REDIS_HOST);
   console.log('NestJS Port : ', process.env.NESTJS_PORT);
 }
-bootstrap();
+// bootstrap();
+AppClusterService.clusterize(bootstrap); // 멀티스레드 사용시(각각의 코어)

@@ -10,6 +10,7 @@ export class SocketioService {
   async PubSublishEvent(pubsub: string, data: CreateSocketioDto) {
     data.time = new Date();
     // pubsub은 redis에 publish할 패턴명
+    console.log('checking error, PubSublishEvent');
     this.client.emit(pubsub, data);
   }
 }
